@@ -1,0 +1,28 @@
+{
+	"interfaceV":{
+		"SDI-1":{"chip":"Link","name":"sdi1","protocols":["SDI"],"did": 0,"cid": 0,"mode": "bt1120i","dstFramerate":60},
+		"SDI-2":{"chip":"Link","name":"sdi2","protocols":["SDI"],"did": 1,"cid": 4,"mode": "bt1120i","dstFramerate":60},
+		"SDI-3":{"chip":"Link","name":"sdi3","protocols":["SDI"],"did": 2,"cid": 8,"mode": "bt1120i","dstFramerate":60},
+		"SDI-4":{"chip":"Link","name":"sdi4","protocols":["SDI"],"did": 3,"cid": 12,"mode": "bt1120i","dstFramerate":60}
+	},
+	"interfaceA":{
+		"SDI-1":{"samplerate":48000,"did": 1,"cid": 0,"chnCnt": 16, "channels": 2,"delay":-80,"delay2": 4},
+		"SDI-2":{"samplerate":48000,"did": 1,"cid": 2,"chnCnt": 16, "channels": 2,"delay":-80,"delay2": 4},
+		"SDI-3":{"samplerate":48000,"did": 1,"cid": 4,"chnCnt": 16, "channels": 2,"delay":-80,"delay2": 4},
+		"SDI-4":{"samplerate":48000,"did": 1,"cid": 6,"chnCnt": 16, "channels": 2,"delay":-80,"delay2": 4},
+		"HDMI-OUT":{"samplerate":48000,"type":"hdmi","did": 1,"cid": 0,"channels":2, "chnCnt": 2,"mode":"i2sm"},
+		"SDI-OUT":{"samplerate":48000,"did": 0,"cid": 0,"channels":2, "chnCnt": 2,"mode":"i2sm"},
+		"Line-In":{"did":-1,"alsa":"hw:0,0","channels":2, "samplerate":48000},
+		"Line-Out":{"did":-1,"alsa":"hw:0,0","channels":2, "samplerate":48000}
+	},
+	"videoBuffer":{
+		"sys":[
+			{"size":3133440,"cnt":100},
+			{"size":345600,"cnt":50}
+		],
+		"dec":[
+			{"size":3146496,"cnt":40},
+			{"size":522240,"cnt":40}
+		]
+	}
+}

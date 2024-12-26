@@ -1,0 +1,33 @@
+{
+"enable":true,
+"brightness":0.3,
+"func":"signal",
+"funcList":{
+    "signal":{        
+        "color":[[255,0,0],[0,255,0]],
+        "mode":"slide"
+    },
+    "record":{        
+        "color":[[0,0,0],[255,0,0]],
+        "mode":"flick"
+    },
+    "push":{        
+        "color":[[0,0,0],[255,180,0]],
+        "mode":"breathe"
+    },
+    "tally":{        
+        "color":[[0,0,0],[255,0,0],[0,255,0]],
+        "mode":"cut",
+        "intercom":true,
+        "ndi":true
+    },
+    "tallyArbiter":{
+        "ip":"192.168.1.56",
+        "port":4455,
+        "deviceId":"",
+        "deviceName":"Unknow",
+        "typeName": "Encoder",
+        "mode":"cut"
+    }
+}
+}

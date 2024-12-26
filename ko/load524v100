@@ -1,0 +1,339 @@
+#!/bin/sh
+# Usage: ./load524v100 [ -r|-i|-a ] [ -ad xxx ]
+#         -r : rmmod all modules
+#         -i : insmod all modules
+#    default : rmmod all moules and then insmod them
+# e.g: ./load524v100 -i
+
+. /link/shell/util/hardware.sh
+####################Variables Definition##########################
+#DDR start:0x40000000;  kernel start:0x40000000,  OS(256M); MMZ start:0x50000000
+mem_total=2048                # 2048M, total mem
+mem_start=0x40000000          # phy mem start
+
+os_mem_size=512               # 256M, os mem
+
+mmz_start=0x60000000;         # mmz start addr
+mmz_size=1536M;               # 1792M, mmz size
+reserve_mem_size=0            # 0M, reserve mmz size
+
+ad_type=nvp6158               #nvp6158,tp2854b, tp2856
+##################################################################
+
+report_error()
+{
+    echo "******* Error: There's something wrong, please check! *****"
+    exit 1
+}
+
+insert_audio()
+{
+    insmod ot_aio.ko
+    insmod ot_ai.ko
+    insmod ot_ao.ko
+    insmod ot_aenc.ko
+    insmod ot_adec.ko
+    #insmod extdrv/ot_es8388.ko
+}
+
+remove_audio()
+{
+    rmmod ot_adec
+    rmmod ot_aenc
+    rmmod ot_ao
+    rmmod ot_ai
+    rmmod ot_aio
+
+    rmmod ot_es8388
+}
+
+get_board_type()
+{
+    case $ad_type in
+        tp2854b)
+            board_type=0
+            ;;
+        tp2856)
+            board_type=0
+            ;;
+        nvp6158)
+            board_type=1
+            ;;
+        *)
+            echo "xxxx Invalid ad type $ad_type xxxx"
+            report_error;;
+    esac
+}
+
+insert_sys_config()
+{
+    # vo_digital="bt.1120", "bt.656"
+if [ "$model" == "REC1" ]; then
+	insmod sys_config.ko chip="ss524v100" g_board_type=$board_type vo_digital="bt.1120" g_eth1_en=1
+else
+    insmod sys_config.ko chip="ss524v100" g_board_type=$board_type vo_digital="bt.1120"
+fi
+}
+
+insert_ad()
+{
+    case $ad_type in
+        tp2854b)
+            insmod extdrv/ot_tp2854b.ko chips=4;
+            ;;
+        tp2856)
+            insmod extdrv/ot_tp2856.ko chips=2;
+            ;;
+        nvp6158)
+            insmod extdrv/ot_nvp6158.ko;
+            ;;
+        *)
+            echo "xxxx Invalid ad type $ad_type xxxx"
+            report_error;;
+    esac
+
+    if [ $board_type = 0 ]; then
+        insmod ot_mipi_rx.ko
+    fi
+}
+
+remove_ad()
+{
+    case $ad_type in
+        tp2854b)
+            rmmod ot_tp2854b.ko;
+            board_type=0;
+            ;;
+        tp2856)
+            rmmod ot_tp2856.ko;
+            board_type=0;
+            ;;
+        nvp6158)
+            rmmod ot_nvp6158.ko;
+            board_type=1
+            ;;
+        *)
+            echo "xxxx Invalid ad type $ad_type xxxx"
+            report_error;;
+    esac
+
+    if [ $board_type = 0 ]; then
+        rmmod ot_mipi_rx.ko
+    fi
+}
+
+insert_ko()
+{
+    get_board_type
+    insert_sys_config
+
+    # driver load
+    insmod ot_osal.ko anony=1 mmz_allocator=ot mmz=anonymous,0,$mmz_start,$mmz_size || report_error
+    insmod ot_base.ko g_vb_force_exit=1
+    insmod ot_sys.ko
+    insmod ot_tde.ko
+    insmod ot_rgn.ko
+    insmod ot_vgs.ko
+    insmod ot_vi.ko 
+    insmod ot_vpss.ko
+    insmod ot_vo.ko
+    insmod gfbg.ko video="gfbg:vram0_size:32400,vram1_size:16200,vram2_size:256,vram3_size:4052"     # default fb0:4k*2*2/1024,fb1:1080p*4*2/1024,fb2:256*256*4,fb3:4k/2/1024
+
+    insmod ot_chnl.ko
+    insmod ot_vedu.ko
+    insmod ot_rc.ko
+    insmod ot_venc.ko
+    insmod ot_h264e.ko
+    insmod ot_h265e.ko
+    insmod ot_jpege.ko
+    insmod ot_jpegd.ko
+    insmod ot_vfmw.ko
+    insmod ot_vdec.ko
+    insmod ot_vda.ko
+    insmod ot_ir.ko
+    insmod ot_ive.ko save_power=1
+    insmod ot_nnie.ko nnie_save_power=1 nnie_max_mem_info_num=32
+    insmod ot_mau.ko mau_save_power=1 mau_max_mem_info_num=32
+    #insert_ad
+    #insmod extdrv/ot_lt8618sx.ko norm=23 Use_DDRCLK=0 #norm 23:HDMI_1080P60 32:HDMI_4KP30 Use_DDRCLK 0:SINGLE 1:DUAL
+    insert_audio
+
+    insmod ot_hdmi.ko
+    insmod ot_user.ko
+    insmod ot_otp.ko
+    insmod ot_cipher.ko
+    insmod ot_wdt.ko
+    insmod extdrv/8852bu.ko
+    insmod extdrv/wlan_mt7961_usb.ko  
+if [ "$model" == "ENCS1" ] || [ "$model" == "VGA1" ] || [ "$model" == "ENC1V3" ]; then
+    insmod extdrv/led_ctrl_drv.ko
+fi
+}
+
+remove_ko()
+{
+    rmmod ot_user
+    remove_audio
+    rmmod ot_hdmi.ko
+    #rmmod ot_lt8618sx.ko
+    remove_ad
+    rmmod ot_mau
+    rmmod ot_nnie
+    rmmod ot_ive
+    rmmod ot_vda
+    rmmod ot_vdec
+    rmmod ot_vfmw
+    rmmod ot_jpegd
+    rmmod ot_rc
+    rmmod ot_jpege
+    rmmod ot_h264e
+    rmmod ot_h265e
+    rmmod ot_venc
+    rmmod ot_vedu
+    rmmod ot_chnl
+    rmmod gfbg
+    rmmod ot_vo
+    rmmod ot_vpss
+    rmmod ot_vi
+
+    rmmod ot_vgs
+    rmmod ot_rgn
+    rmmod ot_tde
+
+#   rmmod ot_sensor_i2c &> /dev/null
+#   rmmod ot_sensor_spi &> /dev/null
+    rmmod ot_sys
+    rmmod ot_base
+    rmmod ot_osal
+    rmmod sys_config
+}
+
+load_usage()
+{
+    echo "Usage:  ./load524v100 [option]"
+    echo "options:"
+    echo "    -i                       insert modules"
+    echo "    -r                       remove modules"
+    echo "    -a                       remove modules first, then insert modules"
+    echo "    -ad ad_name              config ad type [default: tp2854b]"
+    echo "    -total mem_size          config total mem size [unit: M, default: 2048]"
+    echo "    -osmem os_mem_size       config os mem size [unit: M, default: 256]"
+    echo "    -h                       help information"
+    echo -e "for example: ./load524v100 -a -ad tp2854b\n"
+}
+
+calc_mmz_info()
+{
+        mmz_start=`echo "$mem_start $os_mem_size" |
+        awk 'BEGIN { temp = 0; }
+        {
+            temp = $1/1024/1024 + $2;
+        }
+        END { printf("0x%x00000\n", temp); }'`
+
+        mmz_size=`echo "$mem_total $os_mem_size $reserve_mem_size" |
+        awk 'BEGIN { temp = 0; }
+        {
+            temp = $1 - $2 - $3;
+        }
+        END { printf("%dM\n", temp); }'`
+        echo "mmz_start: $mmz_start, mmz_size: $mmz_size"
+}
+
+######################parse arg###################################
+b_arg_insmod=0
+b_arg_remove=0
+b_arg_restore=0
+b_arg_ad=0
+b_arg_total_mem=0
+b_arg_os_mem=0
+b_mem_out_config=0
+board_type=1                  #0:mipi,1:bt656
+
+for arg in $@
+do
+    if [ $b_arg_ad -eq 1 ] ; then
+        b_arg_ad=0;
+        ad_type=$arg;
+    fi
+
+    if [ $b_arg_total_mem -eq 1 ]; then
+        b_arg_total_mem=0;
+        mem_total=$arg;
+
+        if [ -z $mem_total ]; then
+            echo "[error] mem_total is null"
+            exit;
+        fi
+    fi
+
+    if [ $b_arg_os_mem -eq 1 ] ; then
+        b_arg_os_mem=0;
+        os_mem_size=$arg;
+
+        if [ -z $os_mem_size ]; then
+            echo "[error] os_mem_size is null"
+            exit;
+        fi
+    fi
+
+    case $arg in
+        "-i")
+            b_arg_insmod=1;
+            ;;
+        "-r")
+            b_arg_remove=1;
+            ;;
+        "-a")
+            b_arg_insmod=1;
+            b_arg_remove=1;
+            ;;
+        "-h")
+            load_usage;
+            ;;
+        "-osmem")
+            b_arg_os_mem=1;
+            b_mem_out_config=1;
+            ;;
+        "-total")
+            b_arg_total_mem=1;
+            b_mem_out_config=1;
+            ;;
+        "-restore")
+            b_arg_restore=1;
+            ;;
+        "-ad")
+            b_arg_ad=1;
+            ;;
+    esac
+done
+#######################parse arg end########################
+if [ $os_mem_size -ge $(($mem_total - $reserve_mem_size)) ] ; then
+    echo "[err] os_mem[$os_mem_size], over total_mem[$mem_total] - reserve_mem[$reserve_mem_size]"
+    exit;
+fi
+
+if [ $b_mem_out_config -eq 1 ]; then
+    calc_mmz_info;
+fi
+
+
+#######################Action###############################
+
+if [ $# -lt 1 ]; then
+    load_usage;
+    exit 0;
+fi
+
+
+if [ $b_arg_remove -eq 1 ]; then
+    remove_ko;
+fi
+
+if [ $b_arg_insmod -eq 1 ]; then
+    insert_ko;
+fi
+
+if [ $b_arg_restore -eq 1 ]; then
+    sys_restore;
+fi

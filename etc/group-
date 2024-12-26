@@ -1,0 +1,4 @@
+root::0:
+messagebus:x:1000:
+audio:x:1001:root
+avahi:x:1002:

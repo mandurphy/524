@@ -1,0 +1,12 @@
+ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1f01",  RUN+="/etc/udev/usb4g.sh"
+ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="1a2b",  RUN+="/etc/udev/usbWiFi.sh"
+#SUBSYSTEM=="net", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="14db", KERNEL=="eth*",  RUN+="/etc/udev/usbUp.sh %k"
+#SUBSYSTEM=="net", KERNEL=="usb*",  RUN+="/etc/udev/usbUp.sh %k"
+ACTION=="add", KERNEL=="sd*", SUBSYSTEM=="block", RUN+="/link/shell/mountUsb.sh"
+ACTION=="remove",KERNEL=="sd*", SUBSYSTEM=="block", RUN+="/etc/udev/autounmount.sh"
+
+#SUBSYSTEM=="sound", ACTION=="add", ATTRS{idVendor}=="0d8c", ATTRS{idProduct}=="0014", DEVPATH=="/devices/soc/10030000.ohci/usb2/2-1/2-1:1.0/sound/card0", ATTR{id}="Line"
+SUBSYSTEM=="tty", KERNEL=="tty*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="ttyTally"
+#SUBSYSTEM=="input", KERNEL=="event*", ATTRS{idVendor}=="0d8c", ATTRS{idProduct}=="0016",  SYMLINK+="headphone"
+SUBSYSTEM=="input", KERNEL=="event*", ATTRS{idVendor}=="0d8c", ATTRS{idProduct}=="0014",  SYMLINK+="headphone"
+SUBSYSTEM=="input", KERNEL=="event*", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="0010",  SYMLINK+="headphone"

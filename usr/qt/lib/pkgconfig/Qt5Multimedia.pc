@@ -1,0 +1,14 @@
+prefix=/home/linkpi/work/cross/mix410/qt5
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 Multimedia
+Description: Qt Multimedia module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5Multimedia 
+Libs.private: -L/home/linkpi/work/cross/mix410/tslib/lib -L/home/linkpi/work/cross/mix410/qt5/lib -lQt5Network -lQt5Gui -lQt5Core -lpthread   
+Cflags: -I${includedir}/QtMultimedia -I${includedir}
+Requires: Qt5Core Qt5Network Qt5Gui
+

@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "./mixer/static/css/main.67d0ce65.chunk.css",
+    "main.js": "./mixer/static/js/main.3c71e8dd.chunk.js",
+    "main.js.map": "./mixer/static/js/main.3c71e8dd.chunk.js.map",
+    "runtime-main.js": "./mixer/static/js/runtime-main.c45edf70.js",
+    "runtime-main.js.map": "./mixer/static/js/runtime-main.c45edf70.js.map",
+    "static/css/2.a2bed6bb.chunk.css": "./mixer/static/css/2.a2bed6bb.chunk.css",
+    "static/js/2.cb79be97.chunk.js": "./mixer/static/js/2.cb79be97.chunk.js",
+    "static/js/2.cb79be97.chunk.js.map": "./mixer/static/js/2.cb79be97.chunk.js.map",
+    "index.html": "./mixer/index.html",
+    "precache-manifest.e7568ba60c45b4d61a71642890a879d7.js": "./mixer/precache-manifest.e7568ba60c45b4d61a71642890a879d7.js",
+    "service-worker.js": "./mixer/service-worker.js",
+    "static/css/2.a2bed6bb.chunk.css.map": "./mixer/static/css/2.a2bed6bb.chunk.css.map",
+    "static/css/main.67d0ce65.chunk.css.map": "./mixer/static/css/main.67d0ce65.chunk.css.map",
+    "static/js/2.cb79be97.chunk.js.LICENSE.txt": "./mixer/static/js/2.cb79be97.chunk.js.LICENSE.txt",
+    "static/js/main.3c71e8dd.chunk.js.LICENSE.txt": "./mixer/static/js/main.3c71e8dd.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c45edf70.js",
+    "static/css/2.a2bed6bb.chunk.css",
+    "static/js/2.cb79be97.chunk.js",
+    "static/css/main.67d0ce65.chunk.css",
+    "static/js/main.3c71e8dd.chunk.js"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+	"interfaceV":{
+		"SDI":{"chip":"fpga","i2c_num":0,"dev_addr":106,"reg_addr":3,"protocols":["SDI"],"did": 2,"cid": 8,"mode": "bt1120s","dstFramerate":60}
+	},
+	"interfaceA":{
+		"SDI":{"samplerate":48000,"did": 0,"cid": 0,"channels":2, "chnCnt": 2,"mode":"i2sm"},
+		"SDI-OUT":{"samplerate":48000,"did": 0,"cid": 0,"channels":2, "chnCnt": 2,"mode":"i2sm"},
+		"Line-In":{"did":-1,"alsa":"hw:0,0","lnk":"3-1","channels":2, "samplerate":48000},
+		"Line-Out":{"did":-1,"alsa":"hw:0,0","lnk":"3-1","channels":2, "samplerate":48000}
+	},
+	"videoBuffer":{
+		"sys":[
+			{"size":12441600,"cnt":8},
+			{"size":3133440,"cnt":100},
+			{"size":345600,"cnt":50}
+		]
+	}
+}

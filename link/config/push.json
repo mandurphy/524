@@ -1,0 +1,78 @@
+{
+    "autorun": false,
+    "srcA": 0,
+    "srcV": 0,
+    "srcV_chn": "main",
+    "url": [
+        {
+            "des": "platform 1",
+            "enable": false,
+            "flvflags": "",
+            "key": "9bK75sO9Ymks",
+            "path": "rtmp://127.0.0.1/live/9bK75sO9Ymks",
+            "server": "rtmp://127.0.0.1/live",
+            "type": "rtmp"
+        },
+        {
+            "des": "platform 2",
+            "enable": false,
+            "flvflags": "",
+            "key": "6PAoeEOZXKrl",
+            "path": "rtmp://127.0.0.1/live/6PAoeEOZXKrl",
+            "server": "rtmp://127.0.0.1/live",
+            "type": "rtmp"
+        },
+        {
+            "des": "platform 1",
+            "enable": false,
+            "flvflags": "",
+            "ip": "",
+            "latency": "",
+            "mode": "caller",
+            "passphrase": "",
+            "path": "srt://192.168.2.232:7001?mode=caller&latency=50",
+            "port": "",
+            "type": "srt"
+        },
+        {
+            "des": "platform 2",
+            "enable": false,
+            "flvflags": "",
+            "ip": "",
+            "latency": "",
+            "mode": "caller",
+            "passphrase": "",
+            "path": "srt://192.168.2.232:7002?mode=caller&latency=50",
+            "port": "",
+            "type": "srt"
+        },
+        {
+            "des": "platform 1",
+            "enable": false,
+            "flvflags": "",
+            "path": "http://192.168.1.56:1985/rtc/v1/whip/?app=live&stream=livestream",
+            "type": "webrtc"
+        },
+        {
+            "des": "platform 2",
+            "enable": false,
+            "flvflags": "",
+            "path": "http://192.168.1.56:1985/rtc/v1/whip/?app=live&stream=livestream",
+            "type": "webrtc"
+        },
+        {
+            "des": "platform 1",
+            "enable": false,
+            "flvflags": "",
+            "path": "",
+            "type": "custom"
+        },
+        {
+            "des": "platform 2",
+            "enable": false,
+            "flvflags": "",
+            "path": "",
+            "type": "custom"
+        }
+    ]
+}

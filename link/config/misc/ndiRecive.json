@@ -1,0 +1,12 @@
+[
+    {
+        "desc": "NDI Recive1",
+        "bind": "-1",
+        "url": ""
+    },
+    {
+        "desc": "NDI Recive2",
+        "bind": "-1",
+        "url": ""
+    }
+]

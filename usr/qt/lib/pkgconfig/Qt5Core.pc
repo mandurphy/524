@@ -1,0 +1,15 @@
+prefix=/home/linkpi/work/cross/mix410/qt5
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+host_bins=${prefix}/bin
+qt_config=minimal-config small-config medium-config large-config full-config no-pkg-config evdev tslib linuxfb c++11 accessibility shared qpa reduce_exports clock-gettime clock-monotonic posix_fallocate mremap getaddrinfo ipv6ifname getifaddrs inotify eventfd png freetype harfbuzz zlib rpath concurrent audio-backend release
+
+Name: Qt5 Core
+Description: Qt Core module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5Core 
+Libs.private: -L/home/linkpi/work/cross/mix410/tslib/lib -lpthread -L/home/linkpi/work/cross/mix410/qt5/lib -lqtpcre -L/home/linkpi/work/cross/mix410/tslib/lib -lm -ldl  
+Cflags: -I${includedir}/QtCore -I${includedir}
+

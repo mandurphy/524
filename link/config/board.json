@@ -1,0 +1,70 @@
+{
+    "interfaceA": {
+        "HDMI": {
+            "channels": 2,
+            "chip": "IT6801",
+            "chnCnt": 2,
+            "cid": 0,
+            "delay": -80,
+            "delay2": 4,
+            "did": 1,
+            "samplerate": 48000
+        },
+        "HDMI-OUT": {
+            "channels": 2,
+            "chnCnt": 2,
+            "cid": 0,
+            "did": 1,
+            "mode": "i2sm",
+            "samplerate": 48000,
+            "type": "hdmi"
+        },
+        "Line-In": {
+            "channels": 2,
+            "chip": "ES8388",
+            "chnCnt": 2,
+            "cid": 0,
+            "did": 0,
+            "mode": "i2sm",
+            "samplerate": 48000
+        },
+        "Line-Out": {
+            "channels": 2,
+            "chnCnt": 2,
+            "cid": 0,
+            "did": 0,
+            "mode": "i2sm",
+            "samplerate": 48000
+        }
+    },
+    "interfaceV": {
+        "HDMI": {
+            "chip": "IT6801",
+            "cid": 0,
+            "did": 0,
+            "dstFramerate": 60,
+            "mode": "bt1120s",
+            "name": "hdmi1",
+            "protocols": [
+                "HDMI"
+            ],
+            "reverse": true
+        }
+    },
+    "videoBuffer": {
+        "sys": [
+            {
+                "cnt": "20",
+                "size": "12441600"
+            },
+            {
+                "cnt": "80",
+                "size": "3146496"
+            },
+            {
+                "cnt": "50",
+                "size": "345600"
+            }
+        ]
+    }
+}
